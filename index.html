@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>READINGBLUE - Fundamental Research & Information Platform</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style>
+    body {
+      background: #181a20;
+      color: #e4e6eb;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .container {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 95vw;
+    }
+
+    .company-name {
+      font-size: 2.6rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      color: #00ffe7;
+      text-shadow:
+        0 0 10px #00ffe7,
+        0 0 25px #2949ff88;
+      margin-bottom: 10px;
+      margin-top: 0;
+      font-family: 'Inter', 'Montserrat', 'Segoe UI', Arial, sans-serif;
+      text-align: center;
+      animation: neon-flicker 2.8s infinite alternate;
+    }
+
+    @keyframes neon-flicker {
+      0%, 100% { text-shadow: 0 0 10px #00ffe7, 0 0 25px #2949ff88;}
+      10% { text-shadow: 0 0 22px #00ffe7, 0 0 35px #2949ffcc;}
+      20% { text-shadow: 0 0 12px #00ffe7, 0 0 19px #2949ff88;}
+      70% { text-shadow: 0 0 25px #00ffe7cc, 0 0 50px #2949ffcc;}
+    }
+
+    .clock {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      background: #23262f;
+      border-radius: 14px;
+      padding: 14px 34px;
+      margin-bottom: 32px;
+      margin-top: 0;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+      text-align: center;
+      border: 1px solid #2949ff44;
+      font-variant-numeric: tabular-nums;
+      display: inline-block;
+      color: #00ffe7;
+      text-shadow:
+        0 0 18px #00ffe7,
+        0 0 6px #2949ff;
+      transition: box-shadow 0.18s;
+      animation: pulseClock 1s infinite;
+    }
+
+    @keyframes pulseClock {
+      0% {
+        text-shadow: 0 0 18px #00ffe7, 0 0 6px #2949ff;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+      }
+      20% {
+        text-shadow: 0 0 32px #00ffe7cc, 0 0 18px #2949ffcc;
+        box-shadow: 0 4px 24px #00ffe744;
+      }
+      50% {
+        text-shadow: 0 0 18px #00ffe7, 0 0 6px #2949ff;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+      }
+      100% {
+        text-shadow: 0 0 20px #00ffe7, 0 0 8px #2949ff;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+      }
+    }
+
+    .earth-orbit-svg {
+      width: 340px;
+      height: 340px;
+      margin-bottom: 32px;
+      display: block;
+      background: transparent;
+      border-radius: 50%;
+      box-shadow: 0 0 28px #00ffe7cc inset;
+    }
+
+    .description {
+      font-size: 1.23rem;
+      max-width: 650px;
+      text-align: center;
+      line-height: 1.75;
+      background: linear-gradient(120deg, #23262f 85%, #2949ff22 100%);
+      border-radius: 14px;
+      padding: 32px 26px 24px 26px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.14);
+      margin-bottom: 38px;
+      margin-top: 14px;
+      border: 1px solid #2949ff44;
+      color: #e4e6eb;
+      letter-spacing: 0.02em;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    }
+
+    .description strong {
+      font-size: 1.25em;
+      color: #00ffe7;
+      text-shadow: 0 0 7px #00ffe7, 0 0 14px #2949ff66;
+      display: block;
+      margin-bottom: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    .desc-keyword-science {
+      color:#00ffe7;
+      font-weight:600;
+      text-shadow:0 0 7px #00ffe799;
+    }
+    .desc-keyword-metaphysics {
+      color:#ff6cff;
+      font-weight:600;
+      text-shadow:0 0 10px #ff6cff66;
+    }
+    .desc-keyword-math {
+      color:#00ffe7;
+      font-weight:600;
+      text-shadow:0 0 7px #00ffe766;
+    }
+
+    .desc-mission {
+      opacity:0.82;
+      font-size:1.06em;
+      font-style:italic;
+      margin-top: 14px;
+      display:block;
+      color: #b7bfff;
+    }
+
+    @media (max-width: 480px) {
+      .earth-orbit-svg { width: 92vw; height:92vw; max-width:340px; max-height:340px;}
+      .container { width: 99vw; }
+      .description { padding: 16px 6px; font-size:1rem;}
+      .company-name {font-size:1.5rem;}
+      .clock { font-size:1.25rem; padding:9px 11px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="company-name">READINGBLUE</div>
+    <div class="clock" id="clock"></div>
+    <svg class="earth-orbit-svg" viewBox="0 0 340 340">
+      <defs>
+        <radialGradient id="sun-gradient" cx="50%" cy="50%" r="55%" fx="50%" fy="50%">
+          <stop offset="0%" stop-color="#fff700"/>
+          <stop offset="100%" stop-color="#f48000"/>
+        </radialGradient>
+        <radialGradient id="earth-gradient" cx="50%" cy="50%" r="80%" fx="50%" fy="50%">
+          <stop offset="0%" stop-color="#00ffe7"/>
+          <stop offset="100%" stop-color="#2949ff"/>
+        </radialGradient>
+      </defs>
+      <!-- Sun -->
+      <circle id="sun" cx="170" cy="170" r="28" fill="url(#sun-gradient)" stroke="#fff700" stroke-width="2"/>
+      <!-- Orbit Path (animated, drawn by JS) -->
+      <path id="orbit-path" d="" stroke="#00ffe7" stroke-width="2.3" fill="none" opacity="0.32"/>
+      <!-- Earth (animated position by JS) -->
+      <circle id="earth" cx="0" cy="0" r="13" fill="url(#earth-gradient)" stroke="#2949ff" stroke-width="2"/>
+      <!-- Electron-like glow -->
+      <circle id="earth-glow" cx="0" cy="0" r="20" fill="#00ffe766" opacity="0.22"/>
+    </svg>
+    <div class="description">
+      <strong>Welcome to readingblue.</strong>
+      <br>
+      A fundamental research and information platform that cohesively and comprehensively ties all areas of modern research including
+      <span class="desc-keyword-science">Pure/Applied Science</span>,
+      <span class="desc-keyword-metaphysics">Metaphysics</span>
+      &amp; our understanding of
+      <span class="desc-keyword-math">mathematical enquiry</span>.
+      <span class="desc-mission">
+        Our mission is to illuminate the interconnected fabric of knowledge, bridging disciplines for deeper, coherent insight.
+      </span>
+    </div>
+  </div>
+  <script>
+    // Digital clock with pulse and glow effect
+    function pad(n){return n<10?'0'+n:n;}
+    function updateClock() {
+      const now = new Date();
+      let h = pad(now.getHours()), m = pad(now.getMinutes()), s = pad(now.getSeconds());
+      document.getElementById('clock').innerHTML =
+        `<span style="letter-spacing:0.15em;">
+          <span class="clock-digit">${h}</span>
+          <span style="opacity:0.5;">:</span>
+          <span class="clock-digit">${m}</span>
+          <span style="opacity:0.5;">:</span>
+          <span class="clock-digit">${s}</span>
+        </span>`;
+    }
+    setInterval(updateClock, 1000); updateClock();
+
+    // Additional glow pulse for clock digits
+    const style = document.createElement('style');
+    style.textContent = `
+      .clock-digit {
+        color: #00ffe7;
+        text-shadow: 0 0 16px #00ffe7, 0 0 9px #2949ff;
+        font-weight: 800;
+        animation: digitPulse 1s infinite;
+        transition: text-shadow 0.1s;
+      }
+      @keyframes digitPulse {
+        0%, 100% { text-shadow: 0 0 16px #00ffe7, 0 0 9px #2949ff; }
+        50% { text-shadow: 0 0 28px #00ffe7cc, 0 0 20px #2949ffcc; }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Earth orbit animation
+    const orbitPath = document.getElementById('orbit-path');
+    const earth = document.getElementById('earth');
+    const earthGlow = document.getElementById('earth-glow');
+    const centerX = 170, centerY = 170;
+    const orbitRadius = 110;
+    const waveAmplitude = 30;
+    const waveFrequency = 2.5;
+    const points = 80;
+    function getOrbitPoints(tick) {
+      let pts = [];
+      for(let i=0;i<points;i++){
+        let angle = (2*Math.PI*i/points);
+        let wave = Math.sin(angle*waveFrequency + tick*0.7)*waveAmplitude*Math.sin(tick*0.18+angle*0.5);
+        let r = orbitRadius + wave;
+        let x = centerX + r * Math.cos(angle);
+        let y = centerY + r * Math.sin(angle);
+        pts.push([x,y]);
+      }
+      return pts;
+    }
+    function updateOrbit(ts) {
+      let tick = ts/1000.0;
+      let orbitPts = getOrbitPoints(tick);
+      let d = `M ${orbitPts[0][0]},${orbitPts[0][1]}`;
+      for(let i=1;i<orbitPts.length;i++)
+        d += ` L ${orbitPts[i][0]},${orbitPts[i][1]}`;
+      d += " Z";
+      orbitPath.setAttribute('d', d);
+
+      let earthAngle = tick*0.82 % (2*Math.PI);
+      let wave = Math.sin(earthAngle*waveFrequency + tick*0.7)*waveAmplitude*Math.sin(tick*0.18+earthAngle*0.5);
+      let r = orbitRadius + wave;
+      let x = centerX + r*Math.cos(earthAngle);
+      let y = centerY + r*Math.sin(earthAngle);
+
+      earth.setAttribute('cx', x);
+      earth.setAttribute('cy', y);
+      earthGlow.setAttribute('cx', x);
+      earthGlow.setAttribute('cy', y);
+
+      requestAnimationFrame(updateOrbit);
+    }
+    requestAnimationFrame(updateOrbit);
+  </script>
+</body>
+</html>
