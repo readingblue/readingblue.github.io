@@ -1,2 +1,2 @@
 # readingblue.github.io
-Pushing the frontier of AI aresearch
+Pushing the frontier of AI research
