@@ -6,6 +6,9 @@
   <title>readingblue AI</title>
   <meta name="description" content="readingblue AI — research-first company advancing AI, ML and DL." />
   <style>
+    /* global box-sizing so padding doesn't cause overflow */
+    *, *::before, *::after { box-sizing: border-box; }
+
     :root{
       --bg: #ffffff;
       --surface: #fbfbfb;
@@ -39,6 +42,9 @@
       justify-content:center;
       padding:40px 20px;
       transition:background var(--trans), color var(--trans);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      word-wrap:break-word;
     }
 
     .container{
@@ -58,25 +64,34 @@
       justify-content:space-between;
       gap:16px;
       margin-bottom:16px;
+      flex-wrap:wrap; /* prevents overflow on narrow screens */
     }
 
     .brand{display:flex;align-items:center;gap:14px;min-width:0;}
     .logo-wrap{
       width:84px;height:84px;padding:8px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);display:grid;place-items:center;background:transparent;
+      flex-shrink:0;
     }
     :root[data-theme="dark"] .logo-wrap{ border-color: rgba(255,255,255,0.06); }
 
-    .logo-svg{ width:64px;height:64px; display:block; }
+    .logo-svg{ width:100%;height:100%; display:block; } /* scale responsively */
 
-    h1{ margin:0; font-size:28px; }
+    h1{ margin:0; font-size:28px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .tagline{ margin-top:6px; color:var(--muted); font-size:13px; }
 
-    .toggle-btn{ width:40px;height:40px;border-radius:10px;border:1px solid rgba(0,0,0,0.06); background:transparent; display:grid;place-items:center; cursor:pointer; transition: border-color var(--trans);}
+    .toggle-btn{
+      width:40px;height:40px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);
+      background:transparent; display:grid;place-items:center; cursor:pointer;
+      transition: border-color var(--trans), transform 120ms;
+      padding:6px;
+    }
     :root[data-theme="dark"] .toggle-btn{ border-color: rgba(255,255,255,0.06); }
 
+    .toggle-btn:active{ transform:translateY(1px); }
+
     .layout{ display:flex; gap:28px; margin-top:18px; flex-wrap:wrap; align-items:flex-start;}
-    .left{ flex:1; min-width:260px;}
-    .lead{ margin:6px 0 18px 0; color:var(--muted); line-height:1.6;}
+    .left{ flex:1; min-width:260px; min-width:0;}
+    .lead{ margin:6px 0 18px 0; color:var(--muted); line-height:1.6; overflow-wrap:anywhere; }
     .actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;}
 
     .btn{
@@ -91,6 +106,7 @@
       transition: transform 120ms, box-shadow 120ms, border-color 120ms;
       position:relative;
       z-index:1;
+      white-space:nowrap;
     }
 
     /* readingblue.in button: black background with blue border accents */
@@ -132,17 +148,37 @@
     .card{ border:1px solid rgba(0,0,0,0.06); padding:16px; border-radius:10px; background:transparent; color:var(--muted); }
     :root[data-theme="dark"] .card{ border-color: rgba(255,255,255,0.04); }
 
-    .right{ width:260px; min-width:220px; }
+    .right{ width:260px; min-width:220px; flex-shrink:0; }
     .meta{ border:1px solid rgba(0,0,0,0.06); padding:18px; border-radius:10px; }
     :root[data-theme="dark"] .meta{ border-color: rgba(255,255,255,0.04); }
 
     .socials{ margin-top:8px; display:flex;gap:10px; flex-wrap:wrap; }
-    .icon{ width:42px; height:42px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); display:grid; place-items:center; }
+    .icon{ width:42px; height:42px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); display:grid; place-items:center; background:transparent; }
     :root[data-theme="dark"] .icon{ border-color: rgba(255,255,255,0.06); }
 
     footer{ margin-top:22px;color:var(--muted); font-size:13px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;}
 
-    @media (max-width:720px){ .layout{flex-direction:column;} .logo-wrap{width:72px;height:72px;} }
+    /* small screen adjustments */
+    @media (max-width:720px){
+      body{ padding:20px 12px; }
+      .container{ padding:20px; border-radius:10px; }
+      .layout{flex-direction:column; gap:14px;}
+      .logo-wrap{width:72px;height:72px;}
+      .right{ width:100%; min-width:0; }
+      .meta{ width:100%; }
+      .cards{ grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); }
+      header{ align-items:flex-start; gap:12px; }
+    }
+
+    /* very small phones */
+    @media (max-width:420px){
+      .logo-wrap{width:60px;height:60px;}
+      h1{ font-size:20px; }
+      .tagline{ font-size:12px; }
+      .actions{ gap:8px; }
+      .actions .btn{ flex:1 1 100%; justify-content:center; white-space:normal; padding:10px; }
+      .socials .icon{ width:40px; height:40px; }
+    }
   </style>
 </head>
 <body>
@@ -157,10 +193,6 @@
                 <stop offset="0%" stop-color="#2b7be6"/>
                 <stop offset="100%" stop-color="#0f4f8f"/>
               </linearGradient>
-              <linearGradient id="rbGradInlineDark" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#0f4f8f"/>
-                <stop offset="100%" stop-color="#083568"/>
-              </linearGradient>
             </defs>
 
             <g fill="none" stroke="url(#rbGradInline)" stroke-linecap="round" stroke-linejoin="round" stroke-width="60">
@@ -168,45 +200,30 @@
               <path d="M2160 360 C1940 260, 1500 260, 1270 360 L1270 1540 C1480 1420, 1840 1420, 2160 1540 Z"/>
             </g>
 
-            <g fill="none" stroke="url(#rbGradInlineDark)" stroke-linecap="round" stroke-linejoin="round" stroke-width="36" opacity="0.96">
+            <g fill="none" stroke="url(#rbGradInline)" stroke-linecap="round" stroke-linejoin="round" stroke-width="36" opacity="0.96">
               <path d="M1200 320 L1200 1560"/>
               <path d="M780 320 C920 280, 1040 280, 1200 320" opacity="0.9"/>
               <path d="M1620 320 C1480 280, 1360 280, 1200 320" opacity="0.9"/>
             </g>
-
-            <g transform="translate(960,620) scale(1.0)" fill="none" stroke="url(#rbGradInlineDark)" stroke-width="36" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M120 120 c-36 -48, -80 -64, -132 -56 c-44 7, -84 40, -100 88 c-18 54, -6 118, 52 152 c40 25, 92 28, 132 8" />
-              <path d="M360 120 c36 -48, 80 -64, 132 -56 c44 7, 84 40, 100 88 c18 54, 6 118, -52 152 c-40 25, -92 28, -132 8" />
-              <path d="M240 80 L240 272" />
-              <path d="M190 160 q18 -28 36 0" />
-              <path d="M290 160 q-18 -28 -36 0" />
-            </g>
-
-            <g fill="none" stroke="url(#rbGradInline)" stroke-linecap="round" stroke-linejoin="round" stroke-width="60">
-              <path d="M1500 1320 C1660 1280, 1860 1200, 2020 1080" opacity="0.96"/>
-            </g>
-
-            <g fill="none" stroke="url(#rbGradInlineDark)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
-              <path d="M360 1180 C520 1120, 760 1100, 960 1160" />
-              <path d="M1440 1160 C1640 1120, 1880 1100, 2080 1160" />
-            </g>
           </svg>
         </div>
 
-        <div>
+        <div style="min-width:0;">
           <h1 id="site-title">readingblue AI</h1>
           <div class="tagline">Research-first company advancing AI, ML &amp; DL</div>
         </div>
       </div>
 
       <button id="themeBtn" class="toggle-btn" aria-pressed="false" aria-label="Toggle theme">
-        <svg id="themeIcon" viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.4"/></svg>
+        <svg id="themeIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
       </button>
     </header>
 
     <div class="layout">
       <div class="left">
-        <p class="lead">readingblue AI focuses on rigorous research and practical advances in machine learning and deep learning. We publish careful evaluations, build reproducible artifacts, and aim for real-world impact.</p>
+        <p class="lead">readingblue AI focuses on rigorous research and practical advances in machine learning and deep learning. We publish careful evaluations, build reproducible artifacts, and aim to make research useful and usable for practitioners and other researchers.</p>
 
         <div class="actions" role="list">
           <a class="btn btn-accent" href="https://www.readingblue.in" target="_blank" rel="noopener" role="listitem">readingblue.in</a>
@@ -235,15 +252,15 @@
 
           <div class="socials" aria-label="Social links">
             <a class="icon" href="https://www.linkedin.com/company/readingblueai" target="_blank" rel="noopener" aria-label="readingblue on LinkedIn">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><rect x="2.5" y="2.5" width="19" height="19" rx="3" stroke="currentColor" stroke-width="0.9"/><path d="M7.2 9.5h2.6V18H7.2zM8.5 7.5a1.3 1.3 0 110 2.6 1.3 1.3 0 010-2.6zM11.9 9.5h2.2v1.4h.1c.3-.6 1-1.2 2.1-1.2 2.2 0 2.6 1.4 2.6 3.3V18h-2.5v-4c0-1-.1-2.3-1.5-2.3-1.5 0-1.7 1.1-1.7 2.3V18h-2.3z" fill="currentColor"/></svg>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" stroke="currentColor" stroke-width="0.9"/><path d="M7 10h2v7H7zM8 7.8a1 1 0 110-2 1 1 0 010 2zM12 10h2v1.1c.3-.6 1-1.2 2-1.2 1.7 0 2 1.1 2 2.6V17h-2v-3.2c0-.8 0-1.9-1.2-1.9-1.2 0-1.4.9-1.4 1.8V17h-2z" stroke="currentColor" stroke-width="0.6" fill="none"/></svg>
             </a>
 
             <a class="icon" href="https://www.instagram.com/readingblue.in" target="_blank" rel="noopener" aria-label="readingblue on Instagram">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke="currentColor" stroke-width="0.9"/><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="0.9"/><circle cx="17.3" cy="6.7" r="0.5" fill="currentColor"/></svg>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke="currentColor" stroke-width="0.9"/><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="0.9"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
             </a>
 
             <a class="icon" href="https://www.facebook.com/readingblue.co" target="_blank" rel="noopener" aria-label="readingblue on Facebook">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M15.3 21V13.2h2.2l.3-2.2h-2.5V9.1c0-.6.2-1.2 1.2-1.2h1.3V6.1c-.2 0-.9-.1-1.8-.1-1.8 0-3 1.1-3 3.1v1.7h-2.1v2.2h2.1V21h1.2z" fill="currentColor"/></svg>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M15 8h1.5V6.3c0-.8.4-1.8 2-1.8H20V2h-2c-3 0-4 1.8-4 4.3V8H12v3h2v6h3v-6h2.2l.8-3H17v-.2z" stroke="currentColor" stroke-width="0.6" fill="none"/></svg>
             </a>
           </div>
         </div>
@@ -263,24 +280,39 @@
       const key = 'readingblue-theme';
       const btn = document.getElementById('themeBtn');
       const icon = document.getElementById('themeIcon');
-      const sun = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
-      const moon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z" fill="currentColor"/></svg>';
+
+      const sun = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
+      const moon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z" fill="currentColor"/></svg>';
 
       function apply(theme){
-        if(theme === 'dark'){ root.setAttribute('data-theme','dark'); btn.setAttribute('aria-pressed','true'); icon.innerHTML = moon; }
-        else { root.removeAttribute('data-theme'); btn.setAttribute('aria-pressed','false'); icon.innerHTML = sun; }
+        if(theme === 'dark'){
+          root.setAttribute('data-theme','dark');
+          btn.setAttribute('aria-pressed','true');
+          icon.innerHTML = moon;
+        } else {
+          root.removeAttribute('data-theme');
+          btn.setAttribute('aria-pressed','false');
+          icon.innerHTML = sun;
+        }
       }
 
-      const saved = localStorage.getItem(key);
-      if(saved === 'dark' || saved === 'light') apply(saved);
-      else apply(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      try {
+        const saved = localStorage.getItem(key);
+        if(saved === 'dark' || saved === 'light') apply(saved);
+        else apply(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      } catch(e){
+        // localStorage may be disabled (e.g., private mode) — fall back to system preference
+        apply(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      }
 
-      btn.addEventListener('click', ()=>{
-        const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-        const next = current === 'dark' ? 'light' : 'dark';
-        apply(next);
-        localStorage.setItem(key,next);
-      });
+      if(btn){
+        btn.addEventListener('click', ()=>{
+          const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+          const next = current === 'dark' ? 'light' : 'dark';
+          apply(next);
+          try { localStorage.setItem(key,next); } catch(e) {}
+        });
+      }
     })();
   </script>
 </body>
