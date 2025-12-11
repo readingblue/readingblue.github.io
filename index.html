@@ -160,6 +160,8 @@
 
     /* small screen adjustments */
     @media (max-width:720px){
+      /* Fix mobile clipping: stop vertically centering on small viewports so the top isn't hidden behind browser chrome */
+      body{ align-items:flex-start; padding-top:calc(12px + env(safe-area-inset-top)); padding-left:12px; padding-right:12px; }
       body{ padding:20px 12px; }
       .container{ padding:20px; border-radius:10px; }
       .layout{flex-direction:column; gap:14px;}
