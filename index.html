@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>readingblue AI</title>
   <meta name="description" content="readingblue AI — research-first company advancing AI, ML and DL." />
   <style>
@@ -31,7 +31,8 @@
       --btn-com-hover-shadow: rgba(255,255,255,0.06);
     }
 
-    html,body{height:100%;}
+    /* Use device-aware viewport height to avoid mobile chrome clipping */
+    html,body{ height:100%; min-height:100dvh; }
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
@@ -161,8 +162,14 @@
     /* small screen adjustments */
     @media (max-width:720px){
       /* Fix mobile clipping: stop vertically centering on small viewports so the top isn't hidden behind browser chrome */
-      body{ align-items:flex-start; padding-top:calc(12px + env(safe-area-inset-top)); padding-left:12px; padding-right:12px; }
-      body{ padding:20px 12px; }
+      body{
+        align-items:flex-start;
+        padding-top: calc(env(safe-area-inset-top, 12px) + 12px);
+        padding-right: calc(12px + env(safe-area-inset-right, 0px));
+        padding-left: calc(12px + env(safe-area-inset-left, 0px));
+        padding-bottom: calc(env(safe-area-inset-bottom, 12px) + 12px);
+      }
+
       .container{ padding:20px; border-radius:10px; }
       .layout{flex-direction:column; gap:14px;}
       .logo-wrap{width:72px;height:72px;}
